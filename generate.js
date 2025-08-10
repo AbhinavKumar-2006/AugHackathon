@@ -32,7 +32,11 @@ async function generatePDF(data, designChoice) {
             Array.isArray(data.projects) ? data.projects.map(project => `<li>${project}</li>`).join("") : "")
         .replace(/{{college}}/g , data.college);
         
-    const browser = await puppeteer.launch();
+    const browser = await puppeteer.launch({
+        args: ['--no-sandbox', '--disable-setuid-sandbox'],
+        headless: true,
+        executablePath: puppeteer.executablePath(), // ensures Puppeteer uses the downloaded Chromium
+    });
     const page = await browser.newPage();
     await page.setContent(filledTemplate, { waitUntil: "networkidle0" });
     await page.pdf({ path: `${designChoice}_cover_letter.pdf`, format: "A4" });
