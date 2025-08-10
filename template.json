@@ -1,0 +1,18 @@
+{
+    "full_name": "Abhinav Kumar",
+    "job_title": "Business Analyst",
+    "email": "gordon@novoresume.com",
+    "phone": "000 123 4455",
+    "location": "Lyon, France",
+    "linkedin": "linkedin.com/in/gordan.shandiin",
+    "twitter": "@gordan.shandiin",
+    "recipient_name": "Maria Smith",
+    "recipient_title": "Hiring Manager",
+    "recipient_company": "BlackHills Business LLC",
+    "recipient_location": "London, UK",
+    "recipient_email": "maria@blackhills.com",
+    "body": "Dear Maria, I am writing to express my interest in the Business Analyst position...Sincerely, Gordon Shandiin",
+    "college" : "IIT ISM DHANBAD",
+    "skills" : ["html" , "css" , "js" , "react" , "node js" , "express" , "mongoDB" , "ML","DSA"],
+    "projects" : ["leet code clone" , "swiggy clone" , "code debugger" ]
+}
