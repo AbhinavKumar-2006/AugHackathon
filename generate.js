@@ -4,6 +4,7 @@ const cors = require('cors');
 const fs = require("fs");
 const express = require('express');
 const app = express();
+const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 async function generatePDF(data, designChoice) {
@@ -75,6 +76,6 @@ app.get("/getpdf" ,async (req , res)=>{
 });
 
 
-app.listen(4000 , ()=>{
+app.listen(PORT , ()=>{
     console.log("i am listening at port 4000");
 })
