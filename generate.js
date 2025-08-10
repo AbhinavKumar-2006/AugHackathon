@@ -30,12 +30,17 @@ async function generatePDF(data, designChoice) {
         .replace(/{{projects_list}}/g, 
             Array.isArray(data.projects) ? data.projects.map(project => `<li>${project}</li>`).join("") : "")
         .replace(/{{college}}/g , data.college);
-        
-    const browser = await puppeteer.launch({
+    let browser;
+    try {
+        browser = await puppeteer.launch({
         args: ['--no-sandbox', '--disable-setuid-sandbox'],
         headless: true,
-        executablePath: puppeteer.executablePath(), // ensures Puppeteer uses the downloaded Chromium
-    });
+        });
+    } 
+    catch (e) {
+    console.error("Error launching Puppeteer:", e);
+    throw e;
+    }
     const page = await browser.newPage();
     await page.setContent(filledTemplate, { waitUntil: "networkidle0" });
     await page.pdf({ path: `${designChoice}_cover_letter.pdf`, format: "A4" });
