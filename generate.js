@@ -8,7 +8,6 @@ app.use(express.json());
 app.use(cors());
 async function generatePDF(data, designChoice) {
     const template = fs.readFileSync(`./templates/${designChoice}.html`, "utf8");
-
     const filledTemplate = template
         .replace(/{{full_name}}/g, data.full_name || "")
         .replace(/{{job_title}}/g, data.job_title || "")
