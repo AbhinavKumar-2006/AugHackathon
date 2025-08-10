@@ -4,11 +4,11 @@ const cors = require('cors');
 const fs = require("fs");
 const express = require('express');
 const app = express();
-const PORT = process.env.PORT;
 app.use(express.json());
 app.use(cors());
 async function generatePDF(data, designChoice) {
     const template = fs.readFileSync(`./templates/${designChoice}.html`, "utf8");
+
     const filledTemplate = template
         .replace(/{{full_name}}/g, data.full_name || "")
         .replace(/{{job_title}}/g, data.job_title || "")
@@ -31,17 +31,8 @@ async function generatePDF(data, designChoice) {
         .replace(/{{projects_list}}/g, 
             Array.isArray(data.projects) ? data.projects.map(project => `<li>${project}</li>`).join("") : "")
         .replace(/{{college}}/g , data.college);
-    let browser;
-    try {
-        browser = await puppeteer.launch({
-        args: ['--no-sandbox', '--disable-setuid-sandbox'],
-        headless: true,
-        });
-    } 
-    catch (e) {
-    console.error("Error launching Puppeteer:", e);
-    throw e;
-    }
+        
+    const browser = await puppeteer.launch();
     const page = await browser.newPage();
     await page.setContent(filledTemplate, { waitUntil: "networkidle0" });
     await page.pdf({ path: `${designChoice}_cover_letter.pdf`, format: "A4" });
@@ -74,8 +65,9 @@ app.get("/getpdf" ,async (req , res)=>{
     })
 
 });
-
-
-app.listen(PORT , ()=>{
-    console.log("i am listening at port 4000");
+require('dotenv').config();
+const port = process.env.PORT;
+console.log(port);
+app.listen(port , ()=>{
+    console.log("i am listening at port" , port);
 })
